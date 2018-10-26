@@ -1,4 +1,5 @@
 <?php
+
 namespace dodger451\LaravelCodeChecker;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -45,7 +46,7 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
     {
         return ['laravelcodechecker'];
     }
-    
+
     /**
      * Console-specific booting.
      *
@@ -61,10 +62,8 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/Templates/' => config_path(''),
         ], 'laravelcodechecker');
-
-
-
     }
+
     /**
      * Define the commands for the application.
      *
@@ -72,7 +71,6 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
      */
     public function map()
     {
-
         \Artisan::command('cc:phpcs {targets?*}', function ($targets) {
             app('laravelcodechecker')->phpcsCheck($targets);
         })
