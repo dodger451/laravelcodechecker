@@ -8,11 +8,10 @@ Contributions are accepted via Pull Requests on [Github](https://github.com/dodg
 If you want to contribute but do not know where to start, this list provides some starting points.
 
 - Set up TravisCI, StyleCI, ScrutinizerCI
-- Write a comprehensive ReadMe
+- Good ideas fro testing
 
 ## Pull Requests
 
-- **Add tests!** - Your patch won't be accepted if it doesn't have tests.
 
 - **Document any change in behaviour** - Make sure the `readme.md` and any other relevant documentation are kept up-to-date.
 

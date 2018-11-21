@@ -1,6 +1,6 @@
 # The license
 
-Copyright (c) david latotzky <david-laravelcdechecker@latotzky.de>
+Copyright (c) david latotzky <david-laravelcoechecker@latotzky.de>
 
 GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
