@@ -1,8 +1,7 @@
 <?php
 
 return [
-    'php' => 'php',
-    'find' => 'find',
+    'php-cli' => 'php',
     'phpcs' => base_path('vendor/squizlabs/php_codesniffer/bin/phpcs'),
     'phpcbf' => base_path('vendor/squizlabs/php_codesniffer/bin/phpcbf'),
     'phpcs_standard' => '--standard=config/phpcs/',
