@@ -2,6 +2,8 @@
 
 namespace dodger451\LaravelCodeChecker;
 
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 /**
  * @SuppressWarnings(PHPMD.ExitExpression)
  */
@@ -13,16 +15,9 @@ class LaravelCodeChecker
     public function phpcsCheck($targets)
     {
         $config = config('laravelcodechecker');
-        echo $config['php-cli'].' '.$config['phpcs'].' '.$config['phpcs_standard'].' '.
-            (count($targets) > 0 ? implode(' ', $targets) : $config['phpcs_target']).PHP_EOL;
-        system(
-            $config['php-cli'].' '.$config['phpcs'].' '.$config['phpcs_standard'].' '.
-            (count($targets) > 0 ? implode(' ', $targets) : $config['phpcs_target']),
-            $retval
-        );
-        if (0 != $retval) {
-            exit(1);
-        }
+        $command = $config['php-cli'] . ' ' . $config['phpcs'] . ' ' . $config['phpcs_standard'] . ' ' .
+            (count($targets) > 0 ? implode(' ', $targets) : $config['phpcs_target']);
+        return $this->run($command);
     }
 
     /**
@@ -31,18 +26,10 @@ class LaravelCodeChecker
     public function phpcsFix($targets)
     {
         $config = config('laravelcodechecker');
-        echo $config['php-cli'].' '.$config['phpcbf']
-            .' '.$config['phpcs_standard'].' '.(count($targets) > 0
-                ? implode(' ', $targets) : $config['phpcs_target']).PHP_EOL;
-        system(
-            $config['php-cli'].' '.$config['phpcbf']
-            .' '.$config['phpcs_standard'].' '.(count($targets) > 0
-                ? implode(' ', $targets) : $config['phpcs_target']),
-            $retval
-        );
-        if (0 != $retval) {
-            exit(1);
-        }
+        $command = $config['php-cli'] . ' ' . $config['phpcbf']
+            . ' ' . $config['phpcs_standard'] . ' ' . (count($targets) > 0
+                ? implode(' ', $targets) : $config['phpcs_target']);
+        return $this->run($command);
     }
 
     /**
@@ -52,15 +39,17 @@ class LaravelCodeChecker
     {
         $config = config('laravelcodechecker');
         $targets = count($targets) > 0 ? $targets : explode(' ', $config['phplint_target']);
-        foreach ($targets as $target) {
-            $this->runRecurseOnPhpFiles($target, function ($file) use ($config) {
-                system($config['php-cli'].' -l '.' '.$file.' \;', $retval);
+        $count = 0;
 
-                if (0 != $retval) {
-                    exit(1);
-                }
+        foreach ($targets as $target) {
+            $this->runRecurseOnPhpFiles($target, function ($file) use ($config, &$count) {
+                $command = $config['php-cli'] . ' -l ' . ' ' . $file . ' \;';
+                $this->run($command);
+                $count++;
             });
         }
+        
+        return sprintf('Checked %d files.', $count) ;
     }
 
     /**
@@ -70,14 +59,13 @@ class LaravelCodeChecker
     {
         $config = config('laravelcodechecker');
         $targets = count($targets) > 0 ? $targets : explode(' ', $config['phpmd_target']);
+        $out = '';
         foreach ($targets as $target) {
-            echo $config['phpmd'].' '.$target.' text '.$config['phpmd_standard'].' \;'.PHP_EOL;
-            system($config['phpmd'].' '.$target.' text '.$config['phpmd_standard'].' \;', $retval);
-
-            if (0 != $retval) {
-                exit(1);
-            }
+            $command = $config['phpmd'] . ' ' . $target . ' text ' . $config['phpmd_standard'] . ' \;';
+            $out .= $this->run($command);
         }
+        
+        return $out;
     }
 
     protected function runRecurseOnPhpFiles($target, $callback)
@@ -95,5 +83,17 @@ class LaravelCodeChecker
                 }
             }
         }
+    }
+
+    protected function run(string $command) : string
+    {
+        $process = new Process($command);
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        return $process->getCommandLine() . PHP_EOL . $process->getOutput();
     }
 }

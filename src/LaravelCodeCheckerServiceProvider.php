@@ -2,7 +2,9 @@
 
 namespace dodger451\LaravelCodeChecker;
 
+use Artisan;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class LaravelCodeCheckerServiceProvider extends ServiceProvider
 {
@@ -72,29 +74,55 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
     public function map()
     {
         \Artisan::command('cc:phpcs {targets?*}', function ($targets) {
-            app('laravelcodechecker')->phpcsCheck($targets);
+            $this->info("Running phpcs.");
+            try {
+                $this->info(app('laravelcodechecker')->phpcsCheck($targets));
+            } catch (ProcessFailedException $e) {
+                $this->error($e->getMessage());
+            }
         })
             ->describe('laravelcodechecker: Check formatting errors with PHPCS');
-
-        \Artisan::command('cc:phpcs:fix {targets?*}', function ($targets) {
-            app('laravelcodechecker')->phpcsFix($targets);
+        ;
+        Artisan::command('cc:phpcs:fix {targets?*}', function ($targets) {
+            $this->info("Running phpcbf.");
+            try {
+                $this->info(app('laravelcodechecker')->phpcsFix($targets));
+            } catch (ProcessFailedException $e) {
+                $this->error($e->getMessage());
+            }
         })
             ->describe('laravelcodechecker: Fix formatting errors with PHPCBF');
 
-        \Artisan::command('cc:phplint {targets?*}', function ($targets) {
-            app('laravelcodechecker')->phpLint($targets);
+        Artisan::command('cc:phplint {targets?*}', function ($targets) {
+            $this->info("Running php -l.");
+            try {
+                $this->info(app('laravelcodechecker')->phpLint($targets));
+            } catch (ProcessFailedException $e) {
+                $this->error($e->getMessage());
+            }
         })
             ->describe('laravelcodechecker: Find syntax errors with php -l on all files');
 
-        \Artisan::command('cc:phpmd {targets?*}', function ($targets) {
-            app('laravelcodechecker')->phpmd($targets);
+        Artisan::command('cc:phpmd {targets?*}', function ($targets) {
+            $this->info("Running phpmd.");
+            try {
+                $this->info(app('laravelcodechecker')->phpmd($targets));
+            } catch (ProcessFailedException $e) {
+                $this->error($e->getMessage());
+            }
         })
             ->describe('laravelcodechecker: Find messy code with phpmd ');
 
-        \Artisan::command('cc:all {targets?*}', function ($targets) {
-            app('laravelcodechecker')->phpLint($targets);
-            app('laravelcodechecker')->phpcsCheck($targets);
-            app('laravelcodechecker')->phpmd($targets);
+        Artisan::command('cc:all {targets?*}', function ($targets) {
+            try {
+                $this->info("Running php -l.");
+                $this->info(app('laravelcodechecker')->phpLint($targets));
+                $this->info("Running phpcs.");
+                $this->info(app('laravelcodechecker')->phpcsCheck($targets));
+                $this->info("Running phpmd.");
+            } catch (ProcessFailedException $e) {
+                $this->error($e->getMessage());
+            }
         })
             ->describe('laravelcodechecker: Run phplint, phpcs, phpmd ');
     }
