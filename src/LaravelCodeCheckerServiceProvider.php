@@ -76,7 +76,7 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
         \Artisan::command('cc:phpcs {targets?*}', function ($targets) {
             $this->info("Running phpcs.");
             try {
-                $this->info(app('laravelcodechecker')->phpcsCheck($targets));
+                $this->line(app('laravelcodechecker')->phpcsCheck($targets));
             } catch (ProcessFailedException $e) {
                 $this->error($e->getMessage());
             }
@@ -86,7 +86,7 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
         Artisan::command('cc:phpcs:fix {targets?*}', function ($targets) {
             $this->info("Running phpcbf.");
             try {
-                $this->info(app('laravelcodechecker')->phpcsFix($targets));
+                $this->line(app('laravelcodechecker')->phpcsFix($targets));
             } catch (ProcessFailedException $e) {
                 $this->error($e->getMessage());
             }
@@ -96,7 +96,7 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
         Artisan::command('cc:phplint {targets?*}', function ($targets) {
             $this->info("Running php -l.");
             try {
-                $this->info(app('laravelcodechecker')->phpLint($targets));
+                $this->line(app('laravelcodechecker')->phpLint($targets));
             } catch (ProcessFailedException $e) {
                 $this->error($e->getMessage());
             }
@@ -106,7 +106,7 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
         Artisan::command('cc:phpmd {targets?*}', function ($targets) {
             $this->info("Running phpmd.");
             try {
-                $this->info(app('laravelcodechecker')->phpmd($targets));
+                $this->line(app('laravelcodechecker')->phpmd($targets));
             } catch (ProcessFailedException $e) {
                 $this->error($e->getMessage());
             }
@@ -116,10 +116,11 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
         Artisan::command('cc:all {targets?*}', function ($targets) {
             try {
                 $this->info("Running php -l.");
-                $this->info(app('laravelcodechecker')->phpLint($targets));
+                $this->line(app('laravelcodechecker')->phpLint($targets));
                 $this->info("Running phpcs.");
-                $this->info(app('laravelcodechecker')->phpcsCheck($targets));
+                $this->line(app('laravelcodechecker')->phpcsCheck($targets));
                 $this->info("Running phpmd.");
+                $this->line(app('laravelcodechecker')->phpmd($targets));
             } catch (ProcessFailedException $e) {
                 $this->error($e->getMessage());
             }
