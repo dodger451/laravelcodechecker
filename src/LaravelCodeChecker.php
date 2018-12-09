@@ -4,6 +4,7 @@ namespace dodger451\LaravelCodeChecker;
 
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+
 /**
  * @SuppressWarnings(PHPMD.ExitExpression)
  */
@@ -15,8 +16,9 @@ class LaravelCodeChecker
     public function phpcsCheck($targets)
     {
         $config = config('laravelcodechecker');
-        $command = $config['php-cli'] . ' ' . $config['phpcs'] . ' ' . $config['phpcs_standard'] . ' ' .
+        $command = $config['php-cli'].' '.$config['phpcs'].' '.$config['phpcs_standard'].' '.
             (count($targets) > 0 ? implode(' ', $targets) : $config['phpcs_target']);
+
         return $this->run($command);
     }
 
@@ -26,9 +28,10 @@ class LaravelCodeChecker
     public function phpcsFix($targets)
     {
         $config = config('laravelcodechecker');
-        $command = $config['php-cli'] . ' ' . $config['phpcbf']
-            . ' ' . $config['phpcs_standard'] . ' ' . (count($targets) > 0
+        $command = $config['php-cli'].' '.$config['phpcbf']
+            .' '.$config['phpcs_standard'].' '.(count($targets) > 0
                 ? implode(' ', $targets) : $config['phpcs_target']);
+
         return $this->run($command);
     }
 
@@ -43,13 +46,13 @@ class LaravelCodeChecker
 
         foreach ($targets as $target) {
             $this->runRecurseOnPhpFiles($target, function ($file) use ($config, &$count) {
-                $command = $config['php-cli'] . ' -l ' . ' ' . $file . ' \;';
+                $command = $config['php-cli'].' -l '.' '.$file.' \;';
                 $this->run($command);
                 $count++;
             });
         }
-        
-        return sprintf('Checked %d files.', $count) ;
+
+        return sprintf('Checked %d files.', $count);
     }
 
     /**
@@ -61,10 +64,10 @@ class LaravelCodeChecker
         $targets = count($targets) > 0 ? $targets : explode(' ', $config['phpmd_target']);
         $out = '';
         foreach ($targets as $target) {
-            $command = $config['phpmd'] . ' ' . $target . ' text ' . $config['phpmd_standard'] . ' \;';
+            $command = $config['phpmd'].' '.$target.' text '.$config['phpmd_standard'].' \;';
             $out .= $this->run($command);
         }
-        
+
         return $out;
     }
 
@@ -90,10 +93,10 @@ class LaravelCodeChecker
         $process = new Process($command);
         $process->run();
 
-        if (!$process->isSuccessful()) {
+        if (! $process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
 
-        return $process->getCommandLine() . PHP_EOL . $process->getOutput();
+        return $process->getCommandLine().PHP_EOL.$process->getOutput();
     }
 }
