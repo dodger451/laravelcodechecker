@@ -3,8 +3,8 @@
 namespace dodger451\LaravelCodeChecker;
 
 use Artisan;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class LaravelCodeCheckerServiceProvider extends ServiceProvider
 {
@@ -74,7 +74,7 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
     public function map()
     {
         \Artisan::command('cc:phpcs {targets?*}', function ($targets) {
-            $this->info("Running phpcs.");
+            $this->info('Running phpcs.');
             try {
                 $this->line(app('laravelcodechecker')->phpcsCheck($targets));
             } catch (ProcessFailedException $e) {
@@ -82,9 +82,9 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
             }
         })
             ->describe('laravelcodechecker: Check formatting errors with PHPCS');
-        ;
+
         Artisan::command('cc:phpcs:fix {targets?*}', function ($targets) {
-            $this->info("Running phpcbf.");
+            $this->info('Running phpcbf.');
             try {
                 $this->line(app('laravelcodechecker')->phpcsFix($targets));
             } catch (ProcessFailedException $e) {
@@ -94,7 +94,7 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
             ->describe('laravelcodechecker: Fix formatting errors with PHPCBF');
 
         Artisan::command('cc:phplint {targets?*}', function ($targets) {
-            $this->info("Running php -l.");
+            $this->info('Running php -l.');
             try {
                 $this->line(app('laravelcodechecker')->phpLint($targets));
             } catch (ProcessFailedException $e) {
@@ -104,7 +104,7 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
             ->describe('laravelcodechecker: Find syntax errors with php -l on all files');
 
         Artisan::command('cc:phpmd {targets?*}', function ($targets) {
-            $this->info("Running phpmd.");
+            $this->info('Running phpmd.');
             try {
                 $this->line(app('laravelcodechecker')->phpmd($targets));
             } catch (ProcessFailedException $e) {
@@ -115,11 +115,11 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
 
         Artisan::command('cc:all {targets?*}', function ($targets) {
             try {
-                $this->info("Running php -l.");
+                $this->info('Running php -l.');
                 $this->line(app('laravelcodechecker')->phpLint($targets));
-                $this->info("Running phpcs.");
+                $this->info('Running phpcs.');
                 $this->line(app('laravelcodechecker')->phpcsCheck($targets));
-                $this->info("Running phpmd.");
+                $this->info('Running phpmd.');
                 $this->line(app('laravelcodechecker')->phpmd($targets));
             } catch (ProcessFailedException $e) {
                 $this->error($e->getMessage());
