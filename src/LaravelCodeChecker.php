@@ -2,18 +2,22 @@
 
 namespace dodger451\LaravelCodeChecker;
 
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\Exception\ProcessFailedException;
+use \Symfony\Component\Process\Process;
+use \Symfony\Component\Process\Exception\ProcessFailedException;
 
 /**
- * @SuppressWarnings(PHPMD.ExitExpression)
+ *
  */
 class LaravelCodeChecker
 {
     /**
      * PHPCS.
      */
-    public function phpcsCheck($targets)
+    /**
+     * @param array $targets
+     * @return string
+     */
+    public function phpcsCheck(array $targets) : string
     {
         $config = config('laravelcodechecker');
         $command = $config['php-cli'].' '.$config['phpcs'].' '.$config['phpcs_standard'].' '.
@@ -24,8 +28,10 @@ class LaravelCodeChecker
 
     /**
      * PHPCBF.
+     * @param array $targets
+     * @return string
      */
-    public function phpcsFix($targets)
+    public function phpcsFix(array $targets) : string
     {
         $config = config('laravelcodechecker');
         $command = $config['php-cli'].' '.$config['phpcbf']
@@ -37,8 +43,10 @@ class LaravelCodeChecker
 
     /**
      * php -l.
+     * @param array $targets
+     * @return string
      */
-    public function phpLint($targets)
+    public function phpLint(array $targets) : string
     {
         $config = config('laravelcodechecker');
         $targets = count($targets) > 0 ? $targets : explode(' ', $config['phplint_target']);
@@ -57,8 +65,10 @@ class LaravelCodeChecker
 
     /**
      * phpmd.
+     * @param array $targets
+     * @return string
      */
-    public function phpmd($targets)
+    public function phpmd(array $targets) : string
     {
         $config = config('laravelcodechecker');
         $targets = count($targets) > 0 ? $targets : explode(' ', $config['phpmd_target']);
@@ -71,7 +81,11 @@ class LaravelCodeChecker
         return $out;
     }
 
-    protected function runRecurseOnPhpFiles($target, $callback)
+    /**
+     * @param string $target
+     * @param $callback
+     */
+    protected function runRecurseOnPhpFiles(string $target, callable $callback)
     {
         if (is_file($target) && preg_match('/^.*\.(php)$/i', $target)) {
             $callback($target);
@@ -88,15 +102,37 @@ class LaravelCodeChecker
         }
     }
 
+    /**
+     * @param string $command
+     * @return string
+     */
     protected function run(string $command) : string
     {
-        $process = new Process($command);
+        $process = $this->newProcess($command);
         $process->run();
 
         if (! $process->isSuccessful()) {
-            throw new ProcessFailedException($process);
+            throw $this->newProcessFailedException($process);
         }
 
         return $process->getCommandLine().PHP_EOL.$process->getOutput();
+    }
+
+    /**
+     * @param string $command
+     * @return Process
+     */
+    protected function newProcess(string $command) : Process
+    {
+        return new Process($command);
+    }
+
+    /**
+     * @param Process $process
+     * @return ProcessFailedException
+     */
+    protected function newProcessFailedException(Process $process) : ProcessFailedException
+    {
+        return new ProcessFailedException($process);
     }
 }
