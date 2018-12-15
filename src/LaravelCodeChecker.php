@@ -17,7 +17,7 @@ class LaravelCodeChecker
      * @param array $targets
      * @return string
      */
-    public function phpcsCheck(array $targets) : string
+    public function phpcsCheck(array $targets = []) : string
     {
         $config = config('laravelcodechecker');
         $command = $config['php-cli'].' '.$config['phpcs'].' '.$config['phpcs_standard'].' '.
@@ -31,7 +31,7 @@ class LaravelCodeChecker
      * @param array $targets
      * @return string
      */
-    public function phpcsFix(array $targets) : string
+    public function phpcsFix(array $targets = []) : string
     {
         $config = config('laravelcodechecker');
         $command = $config['php-cli'].' '.$config['phpcbf']
@@ -46,7 +46,7 @@ class LaravelCodeChecker
      * @param array $targets
      * @return string
      */
-    public function phpLint(array $targets) : string
+    public function phpLint(array $targets = []) : string
     {
         $config = config('laravelcodechecker');
         $targets = count($targets) > 0 ? $targets : explode(' ', $config['phplint_target']);
@@ -68,7 +68,7 @@ class LaravelCodeChecker
      * @param array $targets
      * @return string
      */
-    public function phpmd(array $targets) : string
+    public function phpmd(array $targets = []) : string
     {
         $config = config('laravelcodechecker');
         $targets = count($targets) > 0 ? $targets : explode(' ', $config['phpmd_target']);
