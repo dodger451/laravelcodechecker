@@ -101,7 +101,8 @@ class LaravelCodeCheckerTest extends TestCase
         $mockProcess->shouldReceive('getCommandLine')->andReturn($expectedCommand);
         $mockProcess->shouldReceive('getOutput')->andReturn('dummy_output');
 
-        $mockLaravelCodeChecker = \Mockery::mock('dodger451\LaravelCodeChecker\LaravelCodeChecker[newProcess]')
+        $mockLaravelCodeChecker =
+            \Mockery::mock('dodger451\LaravelCodeChecker\LaravelCodeChecker[newProcess]')
             ->makePartial()->shouldAllowMockingProtectedMethods();
         $mockLaravelCodeChecker->shouldReceive('newProcess')
             ->with($expectedCommand)
@@ -166,7 +167,8 @@ class LaravelCodeCheckerTest extends TestCase
         $mockProcess->shouldReceive('getCommandLine')->once()->andReturn($expectedCommand);
         $mockProcess->shouldReceive('getOutput')->once()->andReturn('dummy_output');
 
-        $mockLaravelCodeChecker = \Mockery::mock('dodger451\LaravelCodeChecker\LaravelCodeChecker[newProcess,newProcessFailedException]')
+        $mockLaravelCodeChecker =
+            \Mockery::mock('dodger451\LaravelCodeChecker\LaravelCodeChecker[newProcess]')
             ->shouldAllowMockingProtectedMethods();
         $mockLaravelCodeChecker->shouldReceive('newProcess')
             ->with($expectedCommand)
@@ -176,7 +178,7 @@ class LaravelCodeCheckerTest extends TestCase
 
     protected function getFailingMock()
     {
-        $mockProcess = \Mockery::mock('Symfony\Component\Process\Process');//->makePartial();
+        $mockProcess = \Mockery::mock('Symfony\Component\Process\Process');
         $mockProcess->shouldReceive('run')->once();
         $mockProcess->shouldReceive('isSuccessful')->andReturn(false);
         $mockProcess->shouldReceive('newProcessFailedException')->andReturn($mockProcess);
