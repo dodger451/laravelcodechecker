@@ -79,6 +79,8 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
                 $this->line(app('laravelcodechecker')->phpcsCheck($targets));
             } catch (ProcessFailedException $e) {
                 $this->error($e->getMessage());
+
+                exit($e->getMessage());
             }
         })
             ->describe('laravelcodechecker: Check formatting errors with PHPCS');
@@ -89,6 +91,8 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
                 $this->line(app('laravelcodechecker')->phpcsFix($targets));
             } catch (ProcessFailedException $e) {
                 $this->error($e->getMessage());
+
+                exit($e->getMessage());
             }
         })
             ->describe('laravelcodechecker: Fix formatting errors with PHPCBF');
@@ -99,6 +103,8 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
                 $this->line(app('laravelcodechecker')->phpLint($targets));
             } catch (ProcessFailedException $e) {
                 $this->error($e->getMessage());
+
+                exit($e->getMessage());
             }
         })
             ->describe('laravelcodechecker: Find syntax errors with php -l on all files');
@@ -109,6 +115,8 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
                 $this->line(app('laravelcodechecker')->phpmd($targets));
             } catch (ProcessFailedException $e) {
                 $this->error($e->getMessage());
+
+                exit($e->getMessage());
             }
         })
             ->describe('laravelcodechecker: Find messy code with phpmd ');
@@ -123,6 +131,8 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
                 $this->line(app('laravelcodechecker')->phpmd($targets));
             } catch (ProcessFailedException $e) {
                 $this->error($e->getMessage());
+
+                exit($e->getMessage());
             }
         })
             ->describe('laravelcodechecker: Run phplint, phpcs, phpmd ');
