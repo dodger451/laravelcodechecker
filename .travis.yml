@@ -3,6 +3,6 @@ php:
   - '7.2'
   - nightly
 script:
-  vendor/bin/phpcs --standard=src/Templates/phpcs/ src
-  vendor/bin/phpmd src text src/Templates/phpmd/rulesets/cleancode
-  vendor/bin/phpunit tests
+  - vendor/bin/phpcs --standard=src/Templates/phpcs/ src
+  - vendor/bin/phpmd src text src/Templates/phpmd/rulesets/cleancode
+  - vendor/bin/phpunit tests
