@@ -1,5 +1,7 @@
 language: php
 php:
+  - '7.0'
+  - '7.1'
   - '7.2'
   - nightly
 
@@ -8,5 +10,5 @@ install:
 
 script:
   - vendor/squizlabs/php_codesniffer/bin/phpcs --standard=src/Templates/phpcs/ src
-  - vendor/phpmd/phpmd/src/bin/phpmd src text src/Templates/phpmd/rulesets/cleancode
+  - vendor/phpmd/phpmd/src/bin/phpmd src text src/Templates/phpmd/rulesets/cleancode src/Templates/phpmd/rulesets/codesize src/Templates/phpmd/rulesets/controversial src/Templates/phpmd/rulesets/design src/Templates/phpmd/rulesets/naming  src/Templates/phpmd/rulesets/unusedcode
   - vendor/phpunit/phpunit/phpunit tests

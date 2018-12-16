@@ -39,6 +39,5 @@
                 "dodger451\\LaravelCodeChecker\\LaravelCodeCheckerServiceProvider"
             ]
         }
-    },
-    "bin": ["vendor/squizlabs/php_codesniffer/bin", "bin/my-other-script"]
+    }
 }
