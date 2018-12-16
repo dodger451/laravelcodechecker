@@ -12,11 +12,11 @@ class LaravelCodeCheckerTest extends TestCase
     /**
      * PHPCS.
      */
-    #region phpcsCheck
+    //region phpcsCheck
     public function testPhpcsCheckRunsValidCommand()
     {
         $expectedCommand = 'php tools/phpcs --standard=config/phpcs/ dummy_target';
-        $expectedReturn =  $expectedCommand.PHP_EOL.'dummy_output';
+        $expectedReturn = $expectedCommand.PHP_EOL.'dummy_output';
 
         app('config')->set(
             'laravelcodechecker',
@@ -24,7 +24,7 @@ class LaravelCodeCheckerTest extends TestCase
                 'php-cli' => 'php',
                 'phpcs' => 'tools/phpcs',
                 'phpcs_standard' => '--standard=config/phpcs/',
-                'phpcs_target' => 'dummy_target'
+                'phpcs_target' => 'dummy_target',
             ]
         );
 
@@ -41,16 +41,17 @@ class LaravelCodeCheckerTest extends TestCase
         $this->expectException(\Symfony\Component\Process\Exception\ProcessFailedException::class);
         $mockLaravelCodeChecker->phpcsCheck(['dummy_target']);
     }
-    #endregion
+
+    //endregion
 
     /**
      * phpcsFix.
      */
-    #region phpcsFix
+    //region phpcsFix
     public function testPhpcsFixRunsValidCommand()
     {
         $expectedCommand = 'php tools/phpcbf --standard=config/phpcs/ dummy_target';
-        $expectedReturn =  $expectedCommand.PHP_EOL.'dummy_output';
+        $expectedReturn = $expectedCommand.PHP_EOL.'dummy_output';
 
         app('config')->set(
             'laravelcodechecker',
@@ -58,7 +59,7 @@ class LaravelCodeCheckerTest extends TestCase
                 'php-cli' => 'php',
                 'phpcbf' => 'tools/phpcbf',
                 'phpcs_standard' => '--standard=config/phpcs/',
-                'phpcs_target' => 'dummy_target'
+                'phpcs_target' => 'dummy_target',
             ]
         );
 
@@ -75,22 +76,23 @@ class LaravelCodeCheckerTest extends TestCase
         $this->expectException(\Symfony\Component\Process\Exception\ProcessFailedException::class);
         $mockLaravelCodeChecker->phpcsFix(['dummy_target']);
     }
-    #endregion
+
+    //endregion
 
     /**
-     * php -l
+     * php -l.
      */
-    #region phpLint
+    //region phpLint
     public function testPhpLintRunsValidCommand()
     {
         $expectedCommand = 'php -l '.__FILE__.' \;';
-        $expectedReturn =  'Checked 1 files.';
+        $expectedReturn = 'Checked 1 files.';
 
         app('config')->set(
             'laravelcodechecker',
             [
                 'php-cli' => 'php',
-                'phplint_target' => __FILE__
+                'phplint_target' => __FILE__,
             ]
         );
 
@@ -119,23 +121,24 @@ class LaravelCodeCheckerTest extends TestCase
         $this->expectException(\Symfony\Component\Process\Exception\ProcessFailedException::class);
         $mockLaravelCodeChecker->phpcsCheck([__FILE__]);
     }
-    #endregion
+
+    //endregion
 
     /**
      * phpmd.
      */
-    #region phpmd
+    //region phpmd
     public function testPhpmdRunsValidCommand()
     {
         $expectedCommand = 'tools/phpmd dummy_target text config/phpmd/rulesets/cleancode \;';
-        $expectedReturn =  $expectedCommand.PHP_EOL.'dummy_output';
+        $expectedReturn = $expectedCommand.PHP_EOL.'dummy_output';
 
         app('config')->set(
             'laravelcodechecker',
             [
                 'phpmd' => 'tools/phpmd',
                 'phpmd_standard' => 'config/phpmd/rulesets/cleancode',
-                'phpmd_target' => 'dummy_target'
+                'phpmd_target' => 'dummy_target',
             ]
         );
 
@@ -152,12 +155,13 @@ class LaravelCodeCheckerTest extends TestCase
         $this->expectException(\Symfony\Component\Process\Exception\ProcessFailedException::class);
         $mockLaravelCodeChecker->phpmd(['dummy_target']);
     }
-    #endregion
+
+    //endregion
 
     /**
-     * HELPER
+     * HELPER.
      */
-    #region helper
+    //region helper
     protected function getSuccessfulMock($expectedCommand)
     {
         $mockProcess = \Mockery::mock('Symfony\Component\Process\Process')
@@ -173,6 +177,7 @@ class LaravelCodeCheckerTest extends TestCase
         $mockLaravelCodeChecker->shouldReceive('newProcess')
             ->with($expectedCommand)
             ->andReturn($mockProcess);
+
         return $mockLaravelCodeChecker;
     }
 
@@ -190,7 +195,9 @@ class LaravelCodeCheckerTest extends TestCase
             ->andReturn($mockProcess);
         $mockLaravelCodeChecker->shouldReceive('newProcessFailedException')
             ->andReturn(\Mockery::mock('Symfony\Component\Process\Exception\ProcessFailedException'));
+
         return $mockLaravelCodeChecker;
     }
-    #endregion
+
+    //endregion
 }
