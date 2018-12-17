@@ -80,7 +80,7 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
             } catch (ProcessFailedException $e) {
                 $this->error($e->getMessage());
 
-                exit($e->getMessage());
+                exit(1);
             }
         })
             ->describe('laravelcodechecker: Check formatting errors with PHPCS');
@@ -92,7 +92,7 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
             } catch (ProcessFailedException $e) {
                 $this->error($e->getMessage());
 
-                exit($e->getMessage());
+                exit(1);
             }
         })
             ->describe('laravelcodechecker: Fix formatting errors with PHPCBF');
@@ -104,7 +104,7 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
             } catch (ProcessFailedException $e) {
                 $this->error($e->getMessage());
 
-                exit($e->getMessage());
+                exit(1);
             }
         })
             ->describe('laravelcodechecker: Find syntax errors with php -l on all files');
@@ -116,7 +116,7 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
             } catch (ProcessFailedException $e) {
                 $this->error($e->getMessage());
 
-                exit($e->getMessage());
+                exit(1);
             }
         })
             ->describe('laravelcodechecker: Find messy code with phpmd ');
@@ -132,7 +132,7 @@ class LaravelCodeCheckerServiceProvider extends ServiceProvider
             } catch (ProcessFailedException $e) {
                 $this->error($e->getMessage());
 
-                exit($e->getMessage());
+                exit(1);
             }
         })
             ->describe('laravelcodechecker: Run phplint, phpcs, phpmd ');
