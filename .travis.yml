@@ -6,6 +6,7 @@ php:
 
 install:
   - composer install
+  - chmod -R a+x tests/Scripts/
   - tests/Scripts/setup_app.sh
 script:
   - vendor/squizlabs/php_codesniffer/bin/phpcs --standard=src/Templates/phpcs/ src
