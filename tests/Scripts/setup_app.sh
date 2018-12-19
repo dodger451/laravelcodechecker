@@ -4,9 +4,8 @@ composer global require laravel/installer
 composer create-project --prefer-dist laravel/laravel lccTestApp
 
 echo "require LaravelCodeChecker from repo"
-composer config repositories.lcc vcs https://github.com/dodger451/LaravelCodeChecker
-composer require  --prefer-dist --no-interaction dodger451/LaravelCodeChecker:dev-master
-composer update  --prefer-dist --no-interaction dodger451/LaravelCodeChecker
+composer config repositories.lcc vcs https://github.com/dodger451/laravelcodechecker
+composer require  --prefer-dist --no-interaction dodger451/laravelcodechecker:dev-master
 
 
 echo "publishing LaravelCodeChecker standards to config"
