@@ -1,7 +1,7 @@
 #!/bin/sh
 mkdir lccTestProject
 cd lccTestProject
-touch composer.json
+composer init -n
 echo "installing default laravel app"
 echo "-> composer require -n laravel/installer"
 composer require -n laravel/installer
