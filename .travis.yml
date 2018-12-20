@@ -4,8 +4,10 @@ php:
   - '7.2'
   - nightly
 
-before_script:
+before_install:
+  - composer self-update
   - composer config github-oauth.github.com ${GH_TOKEN}
+  - composer validate --no-check-all --ansi
 
 install:
   - composer install
