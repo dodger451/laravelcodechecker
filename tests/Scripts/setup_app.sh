@@ -12,8 +12,8 @@ echo "-> composer config -n --working-dir=. repositories.lcc vcs "
 composer config -n --working-dir=. repositories.lcc vcs https://github.com/dodger451/laravelcodechecker
 echo "->  composer config -n --working-dir=. github-oauth.github.com $1 "
  composer config -n --working-dir=. github-oauth.github.com $1
- echo "-> composer require -n --working-dir=.  --prefer-dist --no-interaction dodger451/laravelcodechecker:dev-${TRAVIS_COMMIT}"
-composer require -n --working-dir=.  --prefer-dist --no-interaction dodger451/laravelcodechecker:dev-${TRAVIS_COMMIT}
+ echo "-> composer require -n --working-dir=.  --prefer-dist --no-interaction dodger451/laravelcodechecker:dev-${TRAVIS_BRANCH}#${TRAVIS_COMMIT}"
+composer require -n --working-dir=.  --prefer-dist --no-interaction dodger451/laravelcodechecker:dev-${TRAVIS_BRANCH}#${TRAVIS_COMMIT}
 
 
 echo "publishing LaravelCodeChecker standards to config"
