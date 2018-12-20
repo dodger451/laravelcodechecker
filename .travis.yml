@@ -5,7 +5,7 @@ php:
   - nightly
 
 before_script:
-  - if [ -n "$GH_TOKEN" ]; then composer config github-oauth.github.com ${GH_TOKEN}; fi;
+  - composer config github-oauth.github.com ${GH_TOKEN}
 
 install:
   - composer install
