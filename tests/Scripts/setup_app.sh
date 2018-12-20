@@ -1,4 +1,6 @@
 #!/bin/sh
+mkdir lccTestProject
+cd lccTestProject
 echo "installing default laravel app"
 composer global require laravel/installer
 composer create-project --prefer-dist laravel/laravel lccTestApp
