@@ -1,8 +1,8 @@
 #!/bin/sh
-mkdir lccTestProject
-cd lccTestProject
-composer init -n
-echo "installing default laravel app"
+#mkdir lccTestProject
+#cd lccTestProject
+#composer init -n
+#echo "installing default laravel app"
 echo "-> composer require -n laravel/installer"
 composer require -n laravel/installer
 echo "-> composer create-project --prefer-dist laravel/laravel lccTestApp"
