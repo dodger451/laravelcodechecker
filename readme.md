@@ -56,6 +56,22 @@ php artisan cc:all tests app
 ```
 To change the default targets that the artisan commands use, modify ``laravelcodechecker.php``
 
+### Travis
+Example `.travis.yml` for travis-ci.org
+```
+language: php
+php:
+  - '7.1'
+  - '7.2'
+  - nightly
+
+install:
+  - composer install
+
+script:
+  - php artisan cc:all
+```
+
 ## Change log
 
 Please see the [changelog](changelog.md) for more information on what has changed recently.
