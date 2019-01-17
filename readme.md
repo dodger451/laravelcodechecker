@@ -2,7 +2,9 @@
 
 [![StyleCI](https://github.styleci.io/repos/154905196/shield?branch=master)]
 
-TODO
+Creates laravel artisan commands to validate your application's sourcecode with `php -l`, `phpmd` and `phpcs`.
+
+Publishes predefined style rulesets into `config/` for customization.
 
 ## Installation
 
@@ -33,15 +35,20 @@ config/
             naming.xml
             unusedcode.xml
 ```
-Adopt these to you preferences, they will be used per default.
-To change the rulefiles that the artisan commands use, modify ``laravelcodechecker.php``
+Adopt the rules in `phpcs/ruleset.xml` and `phpmd/rulesets/*.xml` to your preferences, the `cc:` commands will use them per default.
+To change the default rulefiles, modify ``config/laravelcodechecker.php``
+
 ## Usage
 
 To validate the application with all checks, run
 ``` bash
 php artisan cc:all
 ```
-or alternatively
+
+This will run `php -l`, `phpmd` and `phpcs` on all .php files in `tests/` `routes/` `config/` and `app/`.
+
+
+Alternatively, run each separately:
 
 ``` bash
 php artisan cc:phplint
@@ -49,12 +56,15 @@ php artisan cc:phpcs
 php artisan cc:phpmd
 ```
 
-Per default, each command will target ``tests routes config app``,
-but may be limitted to dirs and/or files, e.g.
+Per default, each command will target ``tests routes config app``.
+You can provide dirs and/or files as arguments to each `cc:` command,
+if you don't want to use the default targets in ``config/laravelcodechecker.php``
+
+E.g. to limit phpmd to the directories `tests/` and `app/` run
 ``` bash
-php artisan cc:all tests app
+php artisan cc:phpmd tests app
 ```
-To change the default targets that the artisan commands use, modify ``laravelcodechecker.php``
+To change the default targets per command, modify ``laravelcodechecker.php``
 
 ### Travis
 Example `.travis.yml` for travis-ci.org

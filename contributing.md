@@ -7,8 +7,9 @@ Contributions are accepted via Pull Requests on [Github](https://github.com/dodg
 # Things you could do
 If you want to contribute but do not know where to start, this list provides some starting points.
 
-- Set up TravisCI, StyleCI, ScrutinizerCI
-- Good ideas fro testing
+- imporve readme
+- feature testing
+- tune default rulesets for laravel
 
 ## Pull Requests
 
