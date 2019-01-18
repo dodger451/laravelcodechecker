@@ -17,7 +17,7 @@ $ composer require --dev dodger451/laravelcodechecker
 Then copy the default config files to /config by running
 
 ``` bash
-php artisan vendor:publish --provider=dodger451/laravelcodechecker
+php artisan vendor:publish --tag=laravelcodechecker
 ```
 
 This will create some rulesets for phpmd and phpcs in ``config/``
